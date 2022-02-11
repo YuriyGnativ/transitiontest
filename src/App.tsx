@@ -19,32 +19,27 @@ const useStyles = makeStyles(() => ({
     maxWidth: "1250px",
     minHeight: "100vh",
     backgroundColor: "rgb(216, 212, 212)",
-    transition: "0.2s easy",
+    // transition: "0.2s easy",
   },
-  noti: {
+  notiStack: {
     position: "fixed",
     bottom: "20%",
     right: "15px",
-    height: "auto",
-    overflow: "visible",
-    transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-    transitionProperty: "height,    transition-duration: 300ms",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    transitionDelay: "0ms",
-    // display: "flex",
-    // flexDirection: "column",
-    // width: "30%",
+    minHeight: 0,
+    overflow: "hidden",
+    backgroundColor: "black",
+    width: "30%",
+    transition: "min-height 0.5s",
   },
-  itemContainer: {
-    height: "auto",
-    overflow: "visible",
-    transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-    transitionProperty: "height,    transition-duration: 300ms",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    transitionDelay: "0ms",
-  },
+  // itemContainer: {
+  //   height: "auto",
+  //   overflow: "visible",
+  //   transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+  //   transitionProperty: "height,    transition-duration: 300ms",
+  //   transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  //   transitionDelay: "0ms",
+  // },
   alertclass: {
-    // transitionDuration: "500ms !important"
     transition: ".5s ease",
   },
 }));
@@ -72,12 +67,11 @@ function App() {
       >
         add
       </button>
-      <TransitionGroup className={classes.noti}>
-        {notiStack.map((i: IAlertItem, index: number) => {
-          return (
-            // <Collapse in={true}>
-            // </Collapse>
-            <div className={classes.itemContainer}>
+      <TransitionGroup></TransitionGroup>
+      <div className={classes.notiStack}>
+        <div style={{ maxHeight: "100%" }}>
+          {notiStack.map((i: IAlertItem, index: number) => {
+            return (
               <Slide in={true} direction="up" timeout={500}>
                 <Alert
                   className={classes.alertclass}
@@ -88,15 +82,44 @@ function App() {
                   {i.text}
                 </Alert>
               </Slide>
-            </div>
-            //             <CSSTransition key={index} timeout={500} classNames="item">
-            // </CSSTransition>
-          );
-        })}
-      </TransitionGroup>
+              // <Collapse in={true}>
+
+              // </Collapse>
+              // <div
+              //   style={{
+              //     minHeight: 0,
+              //     height: "auto",
+              //     transition: "height 0.5s",
+              //     overflow: "visible",
+              //   }}
+              // >
+              //   <div
+              //     style={{
+              //       display: "flex",
+              //       width: "100%",
+              //     }}
+              //   >
+              //     <div
+              //       style={{
+              //         width: "100%",
+              //       }}
+              //     >
+
+              //     </div>
+              //   </div>
+              // </div>
+              // <div className={classes.itemContainer}>
+              //   <div>
+              //   </div>
+              // </div>
+              //             <CSSTransition key={index} timeout={500} classNames="item">
+              // </CSSTransition>
+            );
+          })}
+        </div>
+      </div>
 
       {/* <Stack sx={{ width: "20%" }} spacing={2} className={classes.noti}> */}
-
       {/* <Alert
           iconMapping={{
             success: <CheckCircleOutlineIcon fontSize="inherit" />,
