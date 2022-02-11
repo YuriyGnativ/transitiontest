@@ -9,9 +9,14 @@ import { faker } from "@faker-js/faker";
 import Slide from "@mui/material/Slide";
 import { Collapse } from "@mui/material";
 import "./items.css";
+import * as sad from "@mui/material/";
 
 import { makeStyles } from "@mui/styles";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import {
+  CSSTransition,
+  TransitionGroup,
+  Transition,
+} from "react-transition-group";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,7 +34,24 @@ const useStyles = makeStyles(() => ({
     overflow: "hidden",
     backgroundColor: "black",
     width: "30%",
-    transition: "min-height 0.5s",
+    padding: "15px",
+    // transition: "min-height 0.5s",
+  },
+  item: {
+    ["&-enter"]: {
+      opacity: 0,
+    },
+    ["&-enter-active"]: {
+      opacity: 1,
+      transition: "opacity 200ms",
+    },
+    ["&-exit"]: {
+      opacity: 1,
+    },
+    ["&-exit-active"]: {
+      opacity: 0,
+      transition: "opacity 200ms",
+    },
   },
   // itemContainer: {
   //   height: "auto",
@@ -67,24 +89,30 @@ function App() {
       >
         add
       </button>
-      <TransitionGroup></TransitionGroup>
       <div className={classes.notiStack}>
-        <div style={{ maxHeight: "100%" }}>
+        <TransitionGroup>
           {notiStack.map((i: IAlertItem, index: number) => {
             return (
-              <Slide in={true} direction="up" timeout={500}>
-                <Alert
-                  className={classes.alertclass}
-                  icon={<CheckIcon fontSize="inherit" />}
-                  key={index}
-                  severity="success"
-                >
-                  {i.text}
-                </Alert>
-              </Slide>
-              // <Collapse in={true}>
-
-              // </Collapse>
+              <Collapse
+                key={index}
+                timeout={500}
+                // classNames="item"
+                in={true}
+              >
+                <TransitionGroup>
+                  <Slide in={true} direction="up" timeout={500}>
+                    <Alert
+                      className={classes.alertclass}
+                      // icon={<CheckIcon fontSize="inherit" />}
+                      onClose={() => {}}
+                      key={index}
+                      severity="success"
+                    >
+                      <div>{i.text}</div>
+                    </Alert>
+                  </Slide>
+                </TransitionGroup>
+              </Collapse>
               // <div
               //   style={{
               //     minHeight: 0,
@@ -116,7 +144,7 @@ function App() {
               // </CSSTransition>
             );
           })}
-        </div>
+        </TransitionGroup>
       </div>
 
       {/* <Stack sx={{ width: "20%" }} spacing={2} className={classes.noti}> */}
